@@ -27,20 +27,16 @@ def compute_box(rays, divisor):
     for ray_system in choose_k_in_s(dim, zip(rays, divisor)):
         rays = np.array( [ item[0] for item in ray_system ] )
         a = np.array( [ -item[1] for item in ray_system ] )
-        #rays = matrix(CC, [item[0] for item in ray_system])
-        #a = matrix(ZZ, [-item[1] for item in ray_system])
 
         try:
             m = np.linalg.inv( rays )
         except:
-        #except ZeroDivisionError:
             # No solution, just try the next collection
             continue
 
         solution = m * a.transpose()
 
         for i in range(dim):
-            #m_i = int(RR(real(solution[i][0])))
             m_i = int(solution[i][0])
             min_m, max_m = boxsize[i]
             min_m = min(min_m, m_i)
@@ -104,8 +100,6 @@ def compute_kth_cohomology(rays, cones, divisor, k):
     output, errors = cech.communicate()
     result = int(output.strip())
     
-    os.unlink(fd)
-    
     return result
 
 
@@ -117,4 +111,4 @@ def compute_kth_cohomology(rays, cones, divisor, k):
 rays = [[1,0], [0,1], [-1,-1]]
 cones = [[0,1], [0,2], [1,2]]
 D = [1, 0, 0]
-print( compute_kth_cohomology(rays,cones,D,0) )
+print( compute_kth_cohomology(rays,cones,D,1) )
